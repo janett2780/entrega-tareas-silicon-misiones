@@ -1,0 +1,82 @@
+
+:root {
+  --color-bg: #eef2f7; /* celeste grisáceo */
+  --color-card-bg: #ffffff;
+  --color-title: #1f2933;
+  --color-text: #6b7280;
+  --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
+  --shadow-card-hover: 0 16px 32px rgba(15, 23, 42, 0.14);
+  --radius-card: 16px;
+  --radius-img: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  padding: 24px; /* para que la tarjeta no toque los bordes en pantallas chicas */
+}
+
+.card {
+  background-color: var(--color-card-bg);
+  width: 100%;
+  max-width: 320px;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  text-align: center; /* PASO 7: texto centrado */
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+
+.card__qr {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-img);
+  margin-bottom: 20px;
+}
+
+
+.card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-title);
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+
+.card__text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+
+@media (max-width: 400px) {
+  .card {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .card__title {
+    font-size: 1.1rem;
+  }
+}
