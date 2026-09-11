@@ -18,15 +18,52 @@
   gap: 0.75rem;
 }
 
-.ficha {
+.fichaContainer {
   aspect-ratio: 1 / 1;
-  border-radius: 50%;
   border: none;
-  background-color: #1e293b;
-  color: white;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.ficha {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.volteada {
+  transform: rotateY(180deg);
+}
+
+.caraDorso,
+.caraFrente {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
   font-weight: bold;
-  cursor: pointer;
+  color: white;
+  backface-visibility: hidden;
+}
+
+.caraDorso {
+  background-color: #1e293b;
+}
+
+.caraFrente {
+  background-color: #0ea5e9;
+  transform: rotateY(180deg);
+}
+
+.encontrada .caraFrente {
+  background-color: #22c55e;
 }
 
 .footer {
@@ -34,6 +71,7 @@
   justify-content: space-around;
   margin-top: 1.5rem;
 }
+
 .victoria {
   padding: 2rem 1rem;
   background-color: #f0fdf4;

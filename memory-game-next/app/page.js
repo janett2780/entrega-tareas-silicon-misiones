@@ -27,14 +27,20 @@ function formatearTiempo(totalSegundos) {
 }
 
 export default function Home() {
-  const [tablero, setTablero] = useState(crearTablero);
+  const [tablero, setTablero] = useState(null);
   const [evaluando, setEvaluando] = useState(false);
   const [movimientos, setMovimientos] = useState(0);
   const [segundos, setSegundos] = useState(0);
   const [jugando, setJugando] = useState(false);
 
-  const dadasVuelta = tablero.filter((f) => f.dadaVuelta && !f.encontrada);
-  const gano = tablero.every((f) => f.encontrada);
+  useEffect(() => {
+    setTablero(crearTablero());
+  }, []);
+
+  const dadasVuelta = tablero
+    ? tablero.filter((f) => f.dadaVuelta && !f.encontrada)
+    : [];
+  const gano = tablero ? tablero.every((f) => f.encontrada) : false;
 
   function nuevaPartida() {
     setTablero(crearTablero());
@@ -103,6 +109,14 @@ export default function Home() {
     return () => clearInterval(intervalo);
   }, [jugando, gano]);
 
+  if (!tablero) {
+    return (
+      <main className={styles.main}>
+        <p>Cargando...</p>
+      </main>
+    );
+  }
+
   return (
     <main className={styles.main}>
       <header className={styles.header}>
@@ -119,15 +133,25 @@ export default function Home() {
         </section>
       ) : (
         <section className={styles.grilla}>
-          {tablero.map((ficha) => (
-            <button
-              key={ficha.id}
-              className={styles.ficha}
-              onClick={() => darVuelta(ficha.id)}
-            >
-              {(ficha.dadaVuelta || ficha.encontrada) ? ficha.valor : ""}
-            </button>
-          ))}
+          {tablero.map((ficha) => {
+            const visible = ficha.dadaVuelta || ficha.encontrada;
+            return (
+              <button
+                key={ficha.id}
+                className={styles.fichaContainer}
+                onClick={() => darVuelta(ficha.id)}
+              >
+                <div
+                  className={`${styles.ficha} ${
+                    visible ? styles.volteada : ""
+                  } ${ficha.encontrada ? styles.encontrada : ""}`}
+                >
+                  <div className={styles.caraDorso}></div>
+                  <div className={styles.caraFrente}>{ficha.valor}</div>
+                </div>
+              </button>
+            );
+          })}
         </section>
       )}
 
